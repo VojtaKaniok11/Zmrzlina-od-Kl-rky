@@ -3,6 +3,8 @@ import { IceCream, Clock, MapPin, Facebook, Instagram } from "lucide-react";
 import { getIceCreamData } from "@/lib/sanity.queries";
 import { urlFor } from "@/lib/sanity.image";
 
+export const revalidate = 10; // Obnovit data každých 10 sekund
+
 export default async function Home() {
   // Načtení dat ze Sanity
   const data = await getIceCreamData();
@@ -94,33 +96,56 @@ export default async function Home() {
             </h2>
           </div>
 
-          <div className="flex justify-center gap-6">
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden card-hover w-64">
-              <div className="relative h-80">
-                <Image
-                  src="/fotky/Zmrzlina.jpg"
-                  alt="Točená zmrzlina"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-3 text-center">
-                <h3 className="text-lg font-bold text-gray-800">Točená zmrzlina</h3>
-              </div>
-            </div>
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden card-hover w-64">
-              <div className="relative h-80">
-                <Image
-                  src="/fotky/Frape.jpg"
-                  alt="Frappé"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-3 text-center">
-                <h3 className="text-lg font-bold text-gray-800">Frappé</h3>
-              </div>
-            </div>
+          <div className="flex flex-wrap justify-center gap-6">
+            {galleryImages && galleryImages.length > 0 ? (
+              galleryImages.map((img, index) => (
+                <div key={index} className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden card-hover w-64">
+                  <div className="relative h-80">
+                    <Image
+                      src={urlFor(img.image).url()}
+                      alt={img.caption || "Zmrzlina od Klárky"}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  {img.caption && (
+                    <div className="p-3 text-center">
+                      <h3 className="text-lg font-bold text-gray-800">{img.caption}</h3>
+                    </div>
+                  )}
+                </div>
+              ))
+            ) : (
+              // Fallback pokud nejsou v Sanity žádné obrázky
+              <>
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden card-hover w-64">
+                  <div className="relative h-80">
+                    <Image
+                      src="/fotky/Zmrzlina.jpg"
+                      alt="Točená zmrzlina"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-3 text-center">
+                    <h3 className="text-lg font-bold text-gray-800">Točená zmrzlina</h3>
+                  </div>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden card-hover w-64">
+                  <div className="relative h-80">
+                    <Image
+                      src="/fotky/Frape.jpg"
+                      alt="Frappé"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="p-3 text-center">
+                    <h3 className="text-lg font-bold text-gray-800">Frappé</h3>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
