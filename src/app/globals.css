@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --pastel-pink: #FFD6E8;
+    --pastel-mint: #C8F4DE;
+    --pastel-vanilla: #FFF5E1;
+    --pastel-peach: #FFDAB9;
+    --pastel-lavender: #E6E6FA;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-pink-50 via-green-50 to-yellow-50;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: 'Fredoka', cursive;
+  }
+}
+
+@layer utilities {
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent;
+  }
+}
