@@ -34,6 +34,7 @@ export default async function Home() {
   const facebookUrl = data?.facebookUrl || "https://www.facebook.com/zmrzlinaodklarky";
   const instagramUrl = data?.instagramUrl || "https://www.instagram.com/zmrzlina_od_klarky/";
   const galleryImages = data?.galleryImages || [];
+  const logoUrl = data?.logo ? urlFor(data.logo).url() : "/fotky/logo.jpg";
 
   return (
     <main className="min-h-screen">
@@ -44,7 +45,7 @@ export default async function Home() {
           <div className="mb-6 flex justify-center">
             <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden shadow-xl ring-4 ring-white/50 card-hover">
               <Image
-                src="/fotky/logo.jpg"
+                src={logoUrl}
                 alt="Zmrzlina od Klárky Logo"
                 fill
                 className="object-cover"
